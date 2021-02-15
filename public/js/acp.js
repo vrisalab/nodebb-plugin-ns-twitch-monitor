@@ -519,6 +519,9 @@ var ChannelItemForm = (function (_React$Component) {
     _createClass(ChannelItemForm, [{
         key: 'promptForChannel',
         value: function promptForChannel() {
+            var _bootbox = (typeof window !== "undefined" ? window['bootbox'] : typeof global !== "undefined" ? global['bootbox'] : null);
+
+            var _bootbox2 = _interopRequireDefault(_bootbox);
             _bootbox2['default'].prompt("What is the channel's id?", function (result) {
                 if (result) {
                     _actionsActions2['default'].addChannel(result);
@@ -604,6 +607,9 @@ var ChannelItemView = (function (_React$Component) {
         value: function deleteItem() {
             var _this = this;
 
+            var _bootbox = (typeof window !== "undefined" ? window['bootbox'] : typeof global !== "undefined" ? global['bootbox'] : null);
+
+            var _bootbox2 = _interopRequireDefault(_bootbox);
             _bootbox2['default'].confirm('You are about to delete \'' + this.props.channel.display_name + '\' channel. Are you sure?', function (result) {
                 if (result) {
                     _actionsActions2['default'].channelWillRemove(_this.props.channel.cid);
