@@ -30,13 +30,17 @@ class Settings extends React.Component {
             content = (
                 <div>
                     <ClientIdForm
-                        persisted={this.props.settings.clientIdPersisted}
-                        persistValue={() => Actions.saveClientId(this.props.settings.clientId)}
+                        persistedClientId={this.props.settings.clientIdPersisted}
+                        persistedToken={this.props.settings.tokenPersisted}
+                        persistValueClientId={() => Actions.saveClientId(this.props.settings.clientId)}
+                        persistValueToken={() => Actions.saveToken(this.props.settings.token)}
                         valid={this.props.validation.clientIdValidity}
                         validateValue={() => Actions.validateClientId(this.props.settings.clientId)}
                         validating={this.props.validation.clientIdValidating}
-                        value={this.props.settings.clientId}
-                        valueDidChange={value => Actions.clientIdDidChange(value)}/>
+                        valueClientId={this.props.settings.clientId}
+                        valueToken={this.props.settings.token}
+                        valueClientIdDidChange={value => Actions.clientIdDidChange(value)}
+                        valueTokenDidChange={value => Actions.tokenDidChange(value)}/>
                     <div className="form-group">
                         <label className="control-label" htmlFor="updateTime">Update every</label>
                         <div id="updateTime">{this.props.settings.updateDelay / 1000 | 0} sec</div>

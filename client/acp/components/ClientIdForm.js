@@ -8,11 +8,15 @@ export default class ClientIdForm extends React.Component {
     }
 
     render() {
-        const groupClass = classNames({
+        const groupClassClientId = classNames({
             'form-group'           : true,
             'client-id-form__input': true,
             'has-success'          : this.props.valid === Validation.SUCCESS,
-            'has-error'            : this.props.valid === Validation.FAILURE
+            'has-error': this.props.valid === Validation.FAILURE
+        });
+        const groupClassToken = classNames({
+            'form-group': true,
+            'token-form__input': true,
         });
 
         const validationIconClass = classNames({
@@ -29,15 +33,16 @@ export default class ClientIdForm extends React.Component {
         }
 
         return (
+            <div>
             <div className="client-id-form">
-                <div className={groupClass}>
+                <div className={groupClassClientId}>
                     <label className="control-label" htmlFor="clientId">Client ID {validationLabel}</label>
                     <input
                         type="text"
                         className="form-control"
                         id="clientId"
-                        defaultValue={this.props.value}
-                        onChange={e => this.props.valueDidChange(e.target.value)}
+                        defaultValue={this.props.valueClientId}
+                        onChange={e => this.props.valueClientIdDidChange(e.target.value)}
                         placeholder="Twitch Client ID"/>
                     <small>
                         Hint: you should <a href="http://www.twitch.tv/kraken/oauth2/clients/new" target="_blank">register
@@ -56,10 +61,30 @@ export default class ClientIdForm extends React.Component {
                     <button
                         className="btn btn-primary"
                         type="button"
-                        disabled={(!this.props.value || this.props.persisted) ? 'disabled' : ''}
-                        onClick={this.props.persistValue}><i className="fa fa-floppy-o"></i> Save
+                        disabled={(!this.props.valueClientId || this.props.persistedClientId) ? 'disabled' : ''}
+                        onClick={this.props.persistValueClientId}><i className="fa fa-floppy-o"></i> Save
                     </button>
                 </div>
+            </div>
+            <div className="token-form">
+                <div className={groupClassToken}>
+                    <label className="control-label" htmlFor="Token">Token</label>
+                    <input
+                        type="text"
+                        className="form-control"
+                            id="token"
+                            defaultValue={this.props.valueToken}
+                        onChange={e => this.props.valueTokenDidChange(e.target.value)}
+                        placeholder="Bearer xxxx" />
+                </div>
+                <div className="token-form__controls">
+                    <button
+                        className="btn btn-primary"
+                        type="button"
+                        onClick={this.props.persistValueToken}><i className="fa fa-floppy-o"></i> Save
+                    </button>
+                </div>
+            </div>
             </div>
         );
     }

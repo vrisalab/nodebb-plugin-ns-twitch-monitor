@@ -49,6 +49,9 @@ class Actions {
         this.dispatch(id);
     }
 
+    tokenDidChange(token) {
+        this.dispatch(token);
+    }
     /**
      * Event: result of client id validation, use Validation enum to find proper state
      * @param validation
@@ -84,6 +87,11 @@ class Actions {
     saveClientId(id) {
         this.dispatch();
         SocketService.saveClientId(id);
+    }
+
+    saveToken(id) {
+        this.dispatch();
+        SocketService.saveToken(id);
     }
 
     setSection(sectionId) {
