@@ -93,6 +93,23 @@ export default class SocketService {
         );
     }
 
+    static saveToken(token) {
+        Socket.emit(
+            SocketApi.SAVE_TOKEN,
+            {
+                token: token,
+                test: '123'
+            },
+            error => {
+                if (error) {
+                    return App.alertError(error.message);
+                }
+
+                Actions.getSettings();
+            }
+        );
+    }
+
     static saveClientId(id) {
         Socket.emit(
             SocketApi.SAVE_CLIENT_ID,

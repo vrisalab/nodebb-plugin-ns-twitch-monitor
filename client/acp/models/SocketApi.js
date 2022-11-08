@@ -3,8 +3,9 @@ export default {
     GET_CHANNELS      : 'plugins.ns-twitch-monitor.channelsGet',
     GET_SETTINGS      : 'plugins.ns-twitch-monitor.settingsGet',
     GET_STREAMS       : 'plugins.ns-twitch-monitor.streamsGet',
-    REMOVE_CHANNEL    : 'plugins.ns-twitch-monitor.channelRemove',
-    SAVE_CLIENT_ID    : 'plugins.ns-twitch-monitor.clientIdSave',
+    REMOVE_CHANNEL: 'plugins.ns-twitch-monitor.channelRemove',
+    SAVE_CLIENT_ID: 'plugins.ns-twitch-monitor.clientIdSave',
+    SAVE_TOKEN    : 'plugins.ns-twitch-monitor.tokenSave',
     STREAM_UPDATE     : 'plugins.ns-twitch-monitor.streamUpdate',
     VALIDATE_CLIENT_ID: 'plugins.ns-twitch-monitor.clientIdValidate'
 };

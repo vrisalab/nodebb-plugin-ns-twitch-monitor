@@ -23,8 +23,6 @@
         async.waterfall([
             async.apply(settings.get),
             function (settingsData, next) {
-                //console.log("Creating twitch request");
-                //console.log(path);
                 if (_.isEmpty(settingsData.clientId) && !force) {
                     return next(new Error('Client ID is empty'));
                 }
@@ -37,17 +35,13 @@
                     headers: {
                         //'Accept'   : apiVersion5,
                         'Client-ID': data.clientId || settingsData.clientId,
-                        'Authorization': 'Bearer x3qq502h3zi5idyx9lmy9njxpsfxep'
+                        'Authorization': data.token || settingsData.token
 
                     }
                 });
             },
             function (options, next) {
-                //console.log("Request:");
-                //console.log(options);
                 request(options, function (error, response, body) {
-                    //console.log("Got response");
-                    //console.log(body);
                     if (error) {
                         return next(error);
                     }
@@ -65,9 +59,19 @@
     Api.getChannel = function (channelName, callback) {
         async.waterfall([
             async.apply(createRequest, {
-                path : 'users?id=' + channelName,
+                path: 'users?login=' + channelName,
                 force: false
             }),
+            function (response, next) {
+                if (!response.body.data[0]) {
+                    return next(null, {statusCode: 404});
+                }
+                var id = transform(response, transformEntity).data.id;
+                createRequest({
+                    path: 'users?id=' + id,
+                    force: false
+                }, next);
+            },
             function (response, next) {
                 return next(null, transform(response, transformEntity));
             }
@@ -87,10 +91,10 @@
             function (response, callback) {
                 // Fix issue with Twitch API inconsistency
                 // In some cases, `streams` will not be available, where it should be an empty array
-                if (response.body['data'][0]) {
+                if (typeof response.body['data'] == 'undefined' || response.body['data'][0]) {
                     callback(null, response);
                 } else {
-                    callback(new Error('Streams are not available. Value: ' + response.body['data'][0]));
+                    callback(new Error('Streams are not available. Value: ' + response.body['data']));
                 }
             },
             function (response, callback) {

@@ -25,6 +25,7 @@
         sockets[constants.SOCKETS].channelsGet = Sockets.channelsGet;
         sockets[constants.SOCKETS].channelRemove = Sockets.channelRemove;
         sockets[constants.SOCKETS].clientIdSave = Sockets.clientIdSave;
+        sockets[constants.SOCKETS].tokenSave = Sockets.tokenSave;
         sockets[constants.SOCKETS].clientIdValidate = Sockets.clientIdValidate;
         sockets[constants.SOCKETS].settingsGet = Sockets.settingsGet;
         sockets[constants.SOCKETS].saveSettings = Sockets.saveSettings;
@@ -47,7 +48,13 @@
     };
 
     Sockets.clientIdSave = function (socket, payload, callback) {
+        console.log(payload);
         controller.saveClientId(payload.clientId, callback);
+    };
+
+    Sockets.tokenSave = function (socket, payload, callback) {
+        console.log(payload);
+        controller.saveToken(payload.token, callback);
     };
 
     Sockets.clientIdValidate = function (socket, payload, callback) {

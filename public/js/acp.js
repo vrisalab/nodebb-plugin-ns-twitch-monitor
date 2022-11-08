@@ -267,6 +267,11 @@ var Actions = (function () {
         value: function clientIdDidChange(id) {
             this.dispatch(id);
         }
+    }, {
+        key: 'tokenDidChange',
+        value: function tokenDidChange(token) {
+            this.dispatch(token);
+        }
 
         /**
          * Event: result of client id validation, use Validation enum to find proper state
@@ -312,6 +317,12 @@ var Actions = (function () {
         value: function saveClientId(id) {
             this.dispatch();
             _serviceSocketService2['default'].saveClientId(id);
+        }
+    }, {
+        key: 'saveToken',
+        value: function saveToken(id) {
+            this.dispatch();
+            _serviceSocketService2['default'].saveToken(id);
         }
     }, {
         key: 'setSection',
@@ -495,9 +506,6 @@ var _actionsActions = require('../actions/Actions');
 
 var _actionsActions2 = _interopRequireDefault(_actionsActions);
 
-var _bootbox = (typeof window !== "undefined" ? window['bootbox'] : typeof global !== "undefined" ? global['bootbox'] : null);
-
-var _bootbox2 = _interopRequireDefault(_bootbox);
 
 var _modelsKeyCode = require('../models/KeyCode');
 
@@ -519,6 +527,9 @@ var ChannelItemForm = (function (_React$Component) {
     _createClass(ChannelItemForm, [{
         key: 'promptForChannel',
         value: function promptForChannel() {
+var _bootbox = (typeof window !== "undefined" ? window['bootbox'] : typeof global !== "undefined" ? global['bootbox'] : null);
+
+var _bootbox2 = _interopRequireDefault(_bootbox);
             _bootbox2['default'].prompt("What is the channel's id?", function (result) {
                 if (result) {
                     _actionsActions2['default'].addChannel(result);
@@ -577,9 +588,6 @@ var _actionsActions = require('../actions/Actions');
 
 var _actionsActions2 = _interopRequireDefault(_actionsActions);
 
-var _bootbox = (typeof window !== "undefined" ? window['bootbox'] : typeof global !== "undefined" ? global['bootbox'] : null);
-
-var _bootbox2 = _interopRequireDefault(_bootbox);
 
 var _classnames = require('classnames');
 
@@ -604,6 +612,9 @@ var ChannelItemView = (function (_React$Component) {
         value: function deleteItem() {
             var _this = this;
 
+var _bootbox = (typeof window !== "undefined" ? window['bootbox'] : typeof global !== "undefined" ? global['bootbox'] : null);
+
+var _bootbox2 = _interopRequireDefault(_bootbox);
             _bootbox2['default'].confirm('You are about to delete \'' + this.props.channel.display_name + '\' channel. Are you sure?', function (result) {
                 if (result) {
                     _actionsActions2['default'].channelWillRemove(_this.props.channel.cid);
@@ -1035,11 +1046,15 @@ var ClientIdForm = (function (_React$Component) {
         value: function render() {
             var _this = this;
 
-            var groupClass = (0, _classnames2['default'])({
+            var groupClassClientId = (0, _classnames2['default'])({
                 'form-group': true,
                 'client-id-form__input': true,
                 'has-success': this.props.valid === _modelsValidation2['default'].SUCCESS,
                 'has-error': this.props.valid === _modelsValidation2['default'].FAILURE
+            });
+            var groupClassToken = (0, _classnames2['default'])({
+                'form-group': true,
+                'token-form__input': true
             });
 
             var validationIconClass = (0, _classnames2['default'])({
@@ -1057,64 +1072,103 @@ var ClientIdForm = (function (_React$Component) {
 
             return _react2['default'].createElement(
                 'div',
-                { className: 'client-id-form' },
+                null,
                 _react2['default'].createElement(
                     'div',
-                    { className: groupClass },
+                    { className: 'client-id-form' },
                     _react2['default'].createElement(
-                        'label',
-                        { className: 'control-label', htmlFor: 'clientId' },
-                        'Client ID ',
-                        validationLabel
+                        'div',
+                        { className: groupClassClientId },
+                        _react2['default'].createElement(
+                            'label',
+                            { className: 'control-label', htmlFor: 'clientId' },
+                            'Client ID ',
+                            validationLabel
+                        ),
+                        _react2['default'].createElement('input', {
+                            type: 'text',
+                            className: 'form-control',
+                            id: 'clientId',
+                            defaultValue: this.props.valueClientId,
+                            onChange: function (e) {
+                                return _this.props.valueClientIdDidChange(e.target.value);
+                            },
+                            placeholder: 'Twitch Client ID' }),
+                        _react2['default'].createElement(
+                            'small',
+                            null,
+                            'Hint: you should ',
+                            _react2['default'].createElement(
+                                'a',
+                                { href: 'http://www.twitch.tv/kraken/oauth2/clients/new', target: '_blank' },
+                                'register Twitch Application'
+                            ),
+                            ' to get client id. Please review',
+                            _react2['default'].createElement(
+                                'a',
+                                { href: 'http://www.twitch.tv/user/legal?page=api_terms_of_service', target: '_blank' },
+                                'Terms of Service'
+                            ),
+                            ' for the Twitch API.'
+                        )
                     ),
-                    _react2['default'].createElement('input', {
-                        type: 'text',
-                        className: 'form-control',
-                        id: 'clientId',
-                        defaultValue: this.props.value,
-                        onChange: function (e) {
-                            return _this.props.valueDidChange(e.target.value);
-                        },
-                        placeholder: 'Twitch Client ID' }),
                     _react2['default'].createElement(
-                        'small',
-                        null,
-                        'Hint: you should ',
+                        'div',
+                        { className: 'client-id-form__controls' },
                         _react2['default'].createElement(
-                            'a',
-                            { href: 'http://www.twitch.tv/kraken/oauth2/clients/new', target: '_blank' },
-                            'register Twitch Application'
+                            'button',
+                            {
+                                className: 'btn btn-success',
+                                type: 'button',
+                                onClick: this.props.validateValue },
+                            _react2['default'].createElement('i', { className: validationIconClass }),
+                            ' Validate'
                         ),
-                        ' to get client id. Please review',
                         _react2['default'].createElement(
-                            'a',
-                            { href: 'http://www.twitch.tv/user/legal?page=api_terms_of_service', target: '_blank' },
-                            'Terms of Service'
-                        ),
-                        ' for the Twitch API.'
+                            'button',
+                            {
+                                className: 'btn btn-primary',
+                                type: 'button',
+                                disabled: !this.props.valueClientId || this.props.persistedClientId ? 'disabled' : '',
+                                onClick: this.props.persistValueClientId },
+                            _react2['default'].createElement('i', { className: 'fa fa-floppy-o' }),
+                            ' Save'
+                        )
                     )
                 ),
                 _react2['default'].createElement(
                     'div',
-                    { className: 'client-id-form__controls' },
+                    { className: 'token-form' },
                     _react2['default'].createElement(
-                        'button',
-                        {
-                            className: 'btn btn-success',
-                            type: 'button',
-                            onClick: this.props.validateValue },
-                        _react2['default'].createElement('i', { className: validationIconClass }),
-                        ' Validate'
+                        'div',
+                        { className: groupClassToken },
+                        _react2['default'].createElement(
+                            'label',
+                            { className: 'control-label', htmlFor: 'Token' },
+                            'Token'
+                        ),
+                        _react2['default'].createElement('input', {
+                            type: 'text',
+                            className: 'form-control',
+                            id: 'token',
+                            defaultValue: this.props.valueToken,
+                            onChange: function (e) {
+                                return _this.props.valueTokenDidChange(e.target.value);
+                            },
+                            placeholder: 'Bearer xxxx' })
                     ),
                     _react2['default'].createElement(
-                        'button',
-                        {
-                            className: 'btn btn-primary',
-                            type: 'button',
-                            disabled: !this.props.value || this.props.persisted ? 'disabled' : '',
-                            onClick: this.props.persistValue },
-                        _react2['default'].createElement('i', { className: 'fa fa-floppy-o' }),
-                        ' Save'
+                        'div',
+                        { className: 'token-form__controls' },
+                        _react2['default'].createElement(
+                            'button',
+                            {
+                                className: 'btn btn-primary',
+                                type: 'button',
+                                onClick: this.props.persistValueToken },
+                            _react2['default'].createElement('i', { className: 'fa fa-floppy-o' }),
+                            ' Save'
+                        )
                     )
                 )
             );
@@ -1268,18 +1322,26 @@ var Settings = (function (_React$Component) {
                     'div',
                     null,
                     _react2['default'].createElement(_ClientIdForm2['default'], {
-                        persisted: this.props.settings.clientIdPersisted,
-                        persistValue: function () {
+                        persistedClientId: this.props.settings.clientIdPersisted,
+                        persistedToken: this.props.settings.tokenPersisted,
+                        persistValueClientId: function () {
                             return _actionsActions2['default'].saveClientId(_this.props.settings.clientId);
+                        },
+                        persistValueToken: function () {
+                            return _actionsActions2['default'].saveToken(_this.props.settings.token);
                         },
                         valid: this.props.validation.clientIdValidity,
                         validateValue: function () {
                             return _actionsActions2['default'].validateClientId(_this.props.settings.clientId);
                         },
                         validating: this.props.validation.clientIdValidating,
-                        value: this.props.settings.clientId,
-                        valueDidChange: function (value) {
+                        valueClientId: this.props.settings.clientId,
+                        valueToken: this.props.settings.token,
+                        valueClientIdDidChange: function (value) {
                             return _actionsActions2['default'].clientIdDidChange(value);
+                        },
+                        valueTokenDidChange: function (value) {
+                            return _actionsActions2['default'].tokenDidChange(value);
                         } }),
                     _react2['default'].createElement(
                         'div',
@@ -1633,6 +1695,7 @@ exports['default'] = {
     GET_STREAMS: 'plugins.ns-twitch-monitor.streamsGet',
     REMOVE_CHANNEL: 'plugins.ns-twitch-monitor.channelRemove',
     SAVE_CLIENT_ID: 'plugins.ns-twitch-monitor.clientIdSave',
+    SAVE_TOKEN: 'plugins.ns-twitch-monitor.tokenSave',
     STREAM_UPDATE: 'plugins.ns-twitch-monitor.streamUpdate',
     VALIDATE_CLIENT_ID: 'plugins.ns-twitch-monitor.clientIdValidate'
 };
@@ -27325,6 +27388,20 @@ var SocketService = (function () {
             });
         }
     }, {
+        key: 'saveToken',
+        value: function saveToken(token) {
+            _socket2['default'].emit(_modelsSocketApi2['default'].SAVE_TOKEN, {
+                token: token,
+                test: '123'
+            }, function (error) {
+                if (error) {
+                    return _app2['default'].alertError(error.message);
+                }
+
+                _actionsActions2['default'].getSettings();
+            });
+        }
+    }, {
         key: 'saveClientId',
         value: function saveClientId(id) {
             _socket2['default'].emit(_modelsSocketApi2['default'].SAVE_CLIENT_ID, {
@@ -27516,10 +27593,13 @@ var SettingsStore = (function () {
 
         this.bindListeners({
             clientIdDidChange: _actionsActions2['default'].clientIdDidChange,
+            tokenDidChange: _actionsActions2['default'].tokenDidChange,
             settingsDidUpdate: _actionsActions2['default'].settingsDidUpdate
         });
 
         this.clientId = null;
+        this.token = null;
+        this.tokenPersisted = false;
         this.clientIdPersisted = false;
         this.updateDelay = NaN;
     }
@@ -27531,11 +27611,19 @@ var SettingsStore = (function () {
             this.clientIdPersisted = false;
         }
     }, {
+        key: 'tokenDidChange',
+        value: function tokenDidChange(token) {
+            this.token = token;
+            this.tokenPersisted = false;
+        }
+    }, {
         key: 'settingsDidUpdate',
         value: function settingsDidUpdate(settingsData) {
             this.clientId = settingsData.clientId;
+            this.token = settingsData.token;
             this.updateDelay = settingsData.updateTime;
-            this.clientIdPersisted = true;
+            //this.clientIdPersisted = true;
+            //this.tokenPersisted = true;
         }
     }]);
 

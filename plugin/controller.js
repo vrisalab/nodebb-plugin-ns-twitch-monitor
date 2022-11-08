@@ -74,6 +74,19 @@
         ], callback);
     };
 
+    Controller.saveToken = function (token, callback) {
+        if (!token) {
+            return callback(new Error('Token is empty.'));
+        }
+
+        settings.save({token: token}, function (error, settingsData) {
+            if (error) {
+                return callback(error);
+            }
+            callback(null);
+        });
+    };
+
     Controller.saveClientId = function (clientId, callback) {
         if (!clientId) {
             return callback(new Error('Client ID is empty.'));

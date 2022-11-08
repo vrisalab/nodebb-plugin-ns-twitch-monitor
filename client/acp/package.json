@@ -59,7 +59,7 @@
   },
   "devDependencies": {
     "autoprefixer-core": "^5.2.1",
-    "babelify": "^6.1.2",
+    "babelify": "^6.4.0",
     "browserify": "^9.0.8",
     "browserify-shim": "^3.8.5",
     "envify": "^3.4.0",
