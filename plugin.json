@@ -37,12 +37,10 @@
   "less": [
     "style/widget.less"
   ],
-  "acpScripts": [
-    "public/js/acp.js"
-  ],
-  "scripts": [
-    "public/js/widget.js"
-  ],
+  "modules": {
+    "../admin/plugins/twitch-monitor.js": "public/js/acp.js",
+    "../admin/widgets/wisget.tpl": "public/js/widget.js"
+  },
   "staticDirs": {
     "templates": "./public/templates",
     "js": "./public/js",
