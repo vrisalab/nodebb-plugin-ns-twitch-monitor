@@ -1,8 +1,9 @@
 import Application from './components/Application';
-import Define from 'define';
+//import Define from 'define';
 import React from 'react';
+if (typeof define !== 'function') { var define = require('amdefine')(module) }
 
-Define('admin/plugins/twitch-monitor', [], () => {
+define('admin/plugins/twitch-monitor', [], () => {
     return {
         init: function () {
             React.render(

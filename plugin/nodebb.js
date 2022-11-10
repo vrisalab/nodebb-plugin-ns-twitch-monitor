@@ -18,7 +18,7 @@
         user         : NodeBB.require('./src/user'),
 
         utils  : NodeBB.require('./src/utils'),
-        helpers: NodeBB.require('./src/controllers/helpers'),
+        helpers: NodeBB.require('./src/helpers'),
 
         /**
          * List is incomplete

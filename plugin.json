@@ -38,13 +38,13 @@
     "style/widget.less"
   ],
   "modules": {
-    "../admin/plugins/twitch-monitor.js": "public/js/acp.js",
-    "../admin/widgets/wisget.tpl": "public/js/widget.js"
+    "../admin/plugins/twitch-monitor.js": "public/acp.js",
+    "../admin/widgets/widget.js": "public/widget.js"
   },
   "staticDirs": {
-    "templates": "./public/templates",
-    "js": "./public/js",
     "css": "./public/css"
   },
-  "templates": "./public/templates"
+  "templates": "./templates",
+  "settingsRoute": "/admin/plugins/twitch-monitor"
+
 }

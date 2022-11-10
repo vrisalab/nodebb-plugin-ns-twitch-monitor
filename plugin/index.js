@@ -104,11 +104,11 @@
     function loadTemplate(templatePath, done) {
         fs.readFile(path.resolve(__dirname, '../public/templates', templatePath), function (error, content) {
             if (error) {
-                logger.log('error', 'Template Error has occurred, message: %s', error.message);
+                logger.log('error', 'Template Error has occurred, message: ' + error.message);
                 return done(error);
             }
             widgetTemplates[templatePath] = content.toString();
-            logger.log('verbose', 'Widget Template %s is loaded', templatePath);
+            logger.log('verbose', 'Widget Template ' + templatePath + 'is loaded');
             done(null);
         });
     }

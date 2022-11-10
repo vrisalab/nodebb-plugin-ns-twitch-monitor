@@ -4,7 +4,7 @@
   "description": "Admin Panel for the Plugin",
   "main": "index.js",
   "scripts": {
-    "build": "NODE_ENV=production browserify -t babelify -t envify -g uglifyify index.js -o ../../public/js/acp.js",
+    "build": "NODE_ENV=production browserify -t babelify -t envify  index.js -o ../../public/acp.js",
     "watch-js": "watchify index.js -o ../../public/js/acp.js --verbose",
     "watch-less": "gulp",
     "watch": "npm run watch-less & npm run watch-js",
@@ -33,7 +33,6 @@
     "app": "global:app",
     "jquery": "global:$",
     "socket": "global:socket",
-    "define": "global:define",
     "StripeCheckout": "global:StripeCheckout",
     "bootstrap": {
       "exports": "global:bootstrap",
@@ -53,7 +52,9 @@
   "license": "MIT",
   "dependencies": {
     "alt": "^0.16.10",
+    "amdefine": "^1.0.1",
     "classnames": "^1.2.2",
+    "define": "^1.0.1",
     "lodash": "^3.9.3",
     "react": "^0.13.1"
   },
